@@ -27,7 +27,6 @@ var trendListener :TrendListener?=null
         statecodeList!!.add("All")
         setAll()
 
-
     }
 
     fun setAll(){
@@ -112,6 +111,7 @@ var trendListener :TrendListener?=null
 
     fun setStateWise(state:String) {
 
+        Log.d("select ",state)
         if (state.equals("All")) {
             setAll()
         } else {
@@ -146,17 +146,31 @@ var trendListener :TrendListener?=null
                             if (it[i].status.equals("Confirmed")) {
 
                                 dC = getStateCodeData(it[i], code)
+                                if(dC.equals(""))
+                                {
+                                    dC ="0.0"
+                                }
+
                                 totalC += dC.toFloat()
 
                                 dataC.add(Entry(i.plus(0.0f), totalC))
                             } else if (it[i].status.equals("Recovered")) {
+
                                 dR = getStateCodeData(it[i], code)
+                                if(dR.equals(""))
+                                {
+                                    dR ="0.0"
+                                }
                                 totalR += dR.toFloat()
                                 dataR.add(Entry(i.plus(0.0f), totalR))
 
                             } else if (it[i].status.equals("Deceased")) {
 
                                 dD = getStateCodeData(it[i], code)
+                                if(dD.equals(""))
+                                {
+                                    dD ="0.0"
+                                }
                                 totalD += dD.toFloat()
                                 dataD.add(Entry(i.plus(0.0f), totalD))
                             }

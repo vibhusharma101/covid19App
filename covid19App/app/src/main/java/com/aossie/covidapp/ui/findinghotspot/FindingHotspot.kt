@@ -10,6 +10,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
@@ -82,7 +83,7 @@ class FindingHotspot : AppCompatActivity(), OnMapReadyCallback,HotspotListener{
             )
         )
         mMap = googleMap
-
+        viewmodel!!.setActivity()
 
         if( !checkPermissions())
         {
@@ -90,9 +91,8 @@ class FindingHotspot : AppCompatActivity(), OnMapReadyCallback,HotspotListener{
         }
         else{
             mMap.isMyLocationEnabled =true
-
             getLastLocation()
-            viewmodel!!.setActivity()
+
 
 
         }
@@ -149,6 +149,8 @@ class FindingHotspot : AppCompatActivity(), OnMapReadyCallback,HotspotListener{
                     }
         mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(location.latitude,location!!.longitude)))
         mMap.animateCamera( CameraUpdateFactory.zoomTo(3f) );
+        binding!!.hotspotprogressBar.visibility = View.GONE
+        binding!!.hotspotLinearLayout.visibility =View.VISIBLE
 
 
     }

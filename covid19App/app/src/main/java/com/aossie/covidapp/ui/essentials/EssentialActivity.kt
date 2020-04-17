@@ -99,6 +99,7 @@ class EssentialActivity : AppCompatActivity(),EssentialListener{
 
 
 
+
     }
 
     override fun onFailure(message: String) {
@@ -123,6 +124,9 @@ class EssentialActivity : AppCompatActivity(),EssentialListener{
 
         var categoryAdapter:ArrayAdapter<String> = ArrayAdapter(this,android.R.layout.simple_list_item_1,categoryList!!)
         categorySpinner!!.adapter =categoryAdapter
+
+        binding!!.essentialProgressBar.visibility =View.GONE
+        binding!!.essentialLinearLayout.visibility =View.VISIBLE
 
 
 

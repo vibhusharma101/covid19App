@@ -25,6 +25,7 @@ class TrendsActivity : AppCompatActivity(),TrendListener {
     var binding:ActivityTrendsBinding?=null
     var stateSpinner: Spinner?=null
     var statesList:MutableList<String>?=null
+    var pIn = -1;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +47,11 @@ class TrendsActivity : AppCompatActivity(),TrendListener {
             override fun onItemSelected(parent: AdapterView<*>,
                                         view: View, position: Int, id: Long) {
 
-                viewModel.setStateWise(statesList!![position])
+                if(!(position==pIn)) {
+                    viewModel.setStateWise(statesList!![position])
+                    binding!!.trendProgressBar.visibility = View.GONE
+                    pIn =position
+                }
 
             }
 
@@ -99,9 +104,8 @@ class TrendsActivity : AppCompatActivity(),TrendListener {
         chartRecovered.invalidate()
         binding!!.recoveredCasesTrend.text ="{+${recovered})"
 
-
-
-
+        binding!!.trendProgressBar.visibility =View.GONE
+        binding!!.trendLinearLayout.visibility =View.VISIBLE
 
 
     }
@@ -111,6 +115,9 @@ class TrendsActivity : AppCompatActivity(),TrendListener {
         statesList!!.addAll(statelist)
         var stateAdapter: ArrayAdapter<String> = ArrayAdapter(this,android.R.layout.simple_list_item_1,statesList!!)
         stateSpinner!!.adapter =stateAdapter
+        binding!!.trendProgressBar.visibility =View.GONE
+        binding!!.trendLinearLayout.visibility =View.VISIBLE
+
 
 
     }
