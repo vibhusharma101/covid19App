@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <data>
+        <variable
+            name="hotspotviewmodel"
+            type="com.aossie.covidapp.ui.findinghotspot.FindingHotspotViewModel" />
+
+    </data>
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.findinghotspot.FindingHotspot"
+    >
+
+<fragment
+    android:id="@+id/map"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="Find Nearest Hotspot"
+        android:background="@drawable/rounded_button"
+        android:layout_margin="10dp"
+        android:onClick="@{hotspotviewmodel::onNearestHotspotClicked}"
+        android:tag="nearest"
+        android:id="@+id/nearestHotspotButton"
+        android:clickable="true"
+        />
+
+</LinearLayout>
+
+</layout>
