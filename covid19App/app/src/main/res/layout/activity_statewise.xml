@@ -26,6 +26,16 @@
         android:layout_height="wrap_content"
         >
 
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{stateviewmodel::goBack}"
+            android:id="@+id/statewisebackBtn"
+            />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,6 +46,7 @@
         android:textSize="30sp"
         android:layout_marginBottom="20dp"
         android:id="@+id/headerTextViewStateWise"
+        android:layout_below="@id/statewisebackBtn"
         />
 
     <LinearLayout

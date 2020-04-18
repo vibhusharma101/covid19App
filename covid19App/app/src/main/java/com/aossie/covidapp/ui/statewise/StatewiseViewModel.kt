@@ -1,5 +1,6 @@
 package com.aossie.covidapp.ui.statewise
 
+import android.view.View
 import androidx.lifecycle.ViewModel
 import com.aossie.covidapp.entities.Responses.StateCasesResponses
 import com.aossie.covidapp.repository.MyRepository
@@ -38,6 +39,11 @@ class StatewiseViewModel(private val repo:MyRepository):ViewModel() {
 
 
 
+    }
+
+    fun goBack(view: View)
+    {
+      stateDataListener!!.back()
     }
 
 

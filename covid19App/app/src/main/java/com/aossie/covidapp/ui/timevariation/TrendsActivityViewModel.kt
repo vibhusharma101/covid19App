@@ -2,6 +2,7 @@ package com.aossie.covidapp.ui.timevariation
 
 import android.graphics.Color
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.ViewModel
 import com.aossie.covidapp.entities.Responses.DailyCasesResponse
 import com.aossie.covidapp.entities.Responses.StateCasesResponses
@@ -274,6 +275,11 @@ var trendListener :TrendListener?=null
 
 return dailyclass.an!!;
 
+    }
+
+    fun goBack(view: View)
+    {
+        trendListener!!.back()
     }
 
 

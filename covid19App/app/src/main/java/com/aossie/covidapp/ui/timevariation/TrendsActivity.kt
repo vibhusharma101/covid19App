@@ -1,5 +1,6 @@
 package com.aossie.covidapp.ui.timevariation
 
+import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -31,6 +32,7 @@ class TrendsActivity : AppCompatActivity(),TrendListener {
         super.onCreate(savedInstanceState)
         binding =DataBindingUtil.setContentView(this,R.layout.activity_trends)
 
+        requestedOrientation =ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
         val api = CovidApi(networkConnectionInterceptor)
         val repository = MyRepository(api)
@@ -124,5 +126,9 @@ class TrendsActivity : AppCompatActivity(),TrendListener {
 
     override fun onFailure(message: String) {
        toast(message)
+    }
+
+    override fun back() {
+        super.onBackPressed()
     }
 }

@@ -4,14 +4,17 @@ package com.aossie.covidapp.ui.findinghotspot
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -31,6 +34,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.OnCompleteListener
 import com.aossie.covidapp.R
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.material.snackbar.Snackbar
 
 
 class FindingHotspot : AppCompatActivity(), OnMapReadyCallback,HotspotListener{
@@ -52,6 +56,7 @@ class FindingHotspot : AppCompatActivity(), OnMapReadyCallback,HotspotListener{
         super.onCreate(savedInstanceState)
 
         binding =DataBindingUtil.setContentView(this, R.layout.activity_finding_hotspot)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
         val api = CovidApi(networkConnectionInterceptor)
         val repository = MyRepository(api)
@@ -149,7 +154,7 @@ class FindingHotspot : AppCompatActivity(), OnMapReadyCallback,HotspotListener{
                     }
         mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(location.latitude,location!!.longitude)))
         mMap.animateCamera( CameraUpdateFactory.zoomTo(3f) );
-        binding!!.hotspotprogressBar.visibility = View.GONE
+        binding!!.hotspotShimmerLayout.visibility = View.GONE
         binding!!.hotspotLinearLayout.visibility =View.VISIBLE
 
 
@@ -166,10 +171,24 @@ class FindingHotspot : AppCompatActivity(), OnMapReadyCallback,HotspotListener{
         mMap.addMarker(MarkerOptions().position(LatLng(location.latitude,location.longitude)).title("My Location").icon(
             BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(location.latitude,location!!.longitude)))
-        toast("Nearest hotspot is ${distance/1000} Km away.")
+        showSnacbar("Nearest hotspot is ${distance/1000} Km away.")
         mMap.animateCamera( CameraUpdateFactory.zoomTo(4f) );
-        binding!!.nearestHotspotButton.text ="Show all hotspots"
+        binding!!.nearestHotspotButton.text ="Show all Hotspots"
 
+    }
+
+    private fun showSnacbar(message: String)
+    {
+
+        var snackbar:Snackbar = Snackbar.make(binding!!.mainView,message,Snackbar.LENGTH_INDEFINITE)
+        snackbar.setAction("Ok") {
+            snackbar.dismiss()
+        }
+        var view:View  =snackbar.view
+        var params:CoordinatorLayout.LayoutParams = view.layoutParams as CoordinatorLayout.LayoutParams
+        params.gravity =Gravity.TOP
+        view.layoutParams =params
+        snackbar.show()
     }
 
     private fun checkPermissions(): Boolean {
@@ -217,6 +236,10 @@ class FindingHotspot : AppCompatActivity(), OnMapReadyCallback,HotspotListener{
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
                 LocationManager.NETWORK_PROVIDER
         )
+    }
+
+    override fun back() {
+        super.onBackPressed()
     }
 
 

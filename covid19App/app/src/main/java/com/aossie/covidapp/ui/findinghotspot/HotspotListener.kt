@@ -10,5 +10,7 @@ interface HotspotListener {
 
     fun nearestHotspot(hotspot:LatLng,address:String,location: Location,distance:Float)
 
+    fun back()
+
 
 }

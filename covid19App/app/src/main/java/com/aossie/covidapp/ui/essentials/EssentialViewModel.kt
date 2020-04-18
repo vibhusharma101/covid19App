@@ -28,9 +28,7 @@ class EssentialViewModel(private var repo:MyRepository):ViewModel() {
         categorySet!!.add("All")
         state ="All"
         description ="All"
-
         Coroutine.main{
-
             try {
                 val resourceResponse :ResourceResponse = repo.getResources()
                 resourceResponse.resources.let {
@@ -43,13 +41,8 @@ class EssentialViewModel(private var repo:MyRepository):ViewModel() {
                     }
 
                     essentialListener!!.giveEntries(stateSet!!.toList(),categorySet!!.toList())
-
-
-
-
-
+                    return@main
                 }
-
 
             }
             catch(e:ApiException)
@@ -69,11 +62,10 @@ class EssentialViewModel(private var repo:MyRepository):ViewModel() {
     fun doSearch(view: View)
     {
 
-
+        essentialListener!!.pause()
 
         if(state.equals("All") && description.equals("All"))
         {
-
             essentialListener!!.onSuccess(wholeList!!)
         }
         else if(state.equals("All"))
@@ -100,8 +92,6 @@ class EssentialViewModel(private var repo:MyRepository):ViewModel() {
                 }
                 essentialListener!!.onSuccess(mList)
             }
-
-
         }
         else{
 
@@ -112,7 +102,6 @@ class EssentialViewModel(private var repo:MyRepository):ViewModel() {
                 {
                     mList.add(wholeList!![i])
                 }
-
                     essentialListener!!.onSuccess(mList)
 
 
@@ -121,6 +110,11 @@ class EssentialViewModel(private var repo:MyRepository):ViewModel() {
 
 
         }
+    }
+
+    fun goBack(view: View)
+    {
+     essentialListener!!.back()
     }
 
 

@@ -20,11 +20,77 @@
         tools:openDrawer="start"
         android:id="@+id/drawer_layout_home"
         >
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/swipeRefreshHome">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/homeShimmerLayout"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        >
+
+                        <include
+                            layout="@layout/skeleton_row_layout"
+                            >
+                        </include>
+                        <include
+                            layout="@layout/skeleton_row_layout"
+                            >
+                        </include>
+                        <include
+                        layout="@layout/skeleton_row_layout"
+                        >
+                    </include>
+
+                        <include
+                            layout="@layout/skeleton_row_layout"
+                            >
+                        </include>
+
+
+
+
+
+
+                    </LinearLayout>
+
+
+
+
+
+
+
+
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+
+
+
+
+
+
 
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
+    android:visibility="gone"
+    android:id="@+id/homeMainLayout"
     >
 
     <ImageView
@@ -318,6 +384,11 @@
 
 </RelativeLayout>
 
+
+            </RelativeLayout>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"
             android:layout_width="wrap_content"
@@ -329,6 +400,10 @@
             app:theme="@style/NavigationDrawerStyle" />
 
 
+
+
     </androidx.drawerlayout.widget.DrawerLayout>
+
+
 
 </layout>

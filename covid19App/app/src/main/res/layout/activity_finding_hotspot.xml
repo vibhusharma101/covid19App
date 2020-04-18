@@ -13,19 +13,50 @@
     </data>
 
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mainView">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
 
-        <ProgressBar
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerInParent="true"
-            android:id="@+id/hotspotprogressBar"
-            android:visibility="visible"
-            />
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/hotspotShimmerLayout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+
+                <include
+                    layout="@layout/skeleton_map"
+                    >
+                </include>
+
+
+            </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -34,6 +65,8 @@
     android:id="@+id/hotspotLinearLayout"
     android:visibility="gone"
     >
+
+
 
 <fragment
     android:id="@+id/map"
@@ -57,6 +90,18 @@
         />
 
 </LinearLayout>
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{hotspotviewmodel::goBack}"
+            />
     </RelativeLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

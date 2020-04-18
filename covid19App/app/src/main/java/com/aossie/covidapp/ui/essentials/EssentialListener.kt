@@ -10,5 +10,9 @@ interface EssentialListener {
 
     fun giveEntries(states:List<String>,categories:List<String>)
 
+    fun pause()
+
+    fun back()
+
 
 }

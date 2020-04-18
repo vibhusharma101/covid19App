@@ -41,6 +41,15 @@
         android:visibility="gone"
         >
 
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{trendviewmodel::goBack}"
+            />
+
 
         <TextView
             android:layout_width="wrap_content"

@@ -1,14 +1,17 @@
 package com.aossie.covidapp.ui.home
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
+import android.view.View
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProviders
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.aossie.covidapp.R
 import com.aossie.covidapp.databinding.ActivityHomeBinding
 import com.aossie.covidapp.entities.dataholders.DailyCasesInfo
@@ -28,11 +31,15 @@ class HomeActivity : AppCompatActivity(),HomeListener,NavigationView.OnNavigatio
 
     var binding:ActivityHomeBinding?=null
     var drawer: DrawerLayout?=null
+    var swipeLayout:SwipeRefreshLayout?=null
+    var viewModel:HomeViewModel?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
        binding = DataBindingUtil.setContentView(this,R.layout.activity_home)
         drawer  =binding!!.drawerLayoutHome
+        swipeLayout = binding!!.swipeRefreshHome
 
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         var navigationView:NavigationView =binding!!.navView
         navigationView.setNavigationItemSelectedListener(this)
 
@@ -46,10 +53,17 @@ class HomeActivity : AppCompatActivity(),HomeListener,NavigationView.OnNavigatio
         val repository = MyRepository(api)
         val factory:HomeViewModelFactory = HomeViewModelFactory(repository)
 
-        val viewModel = ViewModelProviders.of(this,factory).get(HomeViewModel::class.java)
+        viewModel = ViewModelProviders.of(this,factory).get(HomeViewModel::class.java)
         binding!!.homeviewmodel =viewModel
-        viewModel.homeListener =this
-        viewModel.setUi()
+        viewModel!!.homeListener =this
+        viewModel!!.setUi()
+
+        swipeLayout!!.setOnRefreshListener {
+            binding!!.homeShimmerLayout.visibility =View.VISIBLE
+            binding!!.homeMainLayout.visibility = View.GONE
+            viewModel!!.setUi()
+        }
+
     }
 
     override fun onSuccess(dailyCases: DailyCasesInfo) {
@@ -60,12 +74,13 @@ class HomeActivity : AppCompatActivity(),HomeListener,NavigationView.OnNavigatio
         binding!!.deceasedCasesAddHome.text ="(+${dailyCases.dailydeceased})"
         binding!!.recoveredCasesHome.text =dailyCases.totalrecovered
         binding!!.recoveredCasesAddHome.text ="(+${dailyCases.dailyrecovered})"
-
         var activeCasesTotal :Int =dailyCases.totalconfirmed!!.toInt() - dailyCases.totalrecovered!!.toInt() - dailyCases.totaldeceased!!.toInt()
         var activeCasesDaily:Int =dailyCases.dailyconfirmed!!.toInt() - dailyCases.dailydeceased!!.toInt() - dailyCases.dailyrecovered!!.toInt()
         binding!!.activeCasesHome.text  =activeCasesTotal.toString()
         binding!!.activeCasesAddHome.text = "(+${activeCasesDaily})"
-
+        swipeLayout!!.isRefreshing =false
+        binding!!.homeShimmerLayout.visibility =View.GONE
+        binding!!.homeMainLayout.visibility = View.VISIBLE
     }
 
     override fun onFailure(message: String) {

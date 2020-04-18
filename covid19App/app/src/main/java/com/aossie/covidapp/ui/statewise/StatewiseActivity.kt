@@ -1,5 +1,6 @@
 package com.aossie.covidapp.ui.statewise
 
+import android.content.pm.ActivityInfo
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -28,6 +29,7 @@ class StatewiseActivity : AppCompatActivity(),StateDataListener{
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_statewise)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
         val api = CovidApi(networkConnectionInterceptor)
         val repository = MyRepository(api)
@@ -112,5 +114,9 @@ class StatewiseActivity : AppCompatActivity(),StateDataListener{
 
     override fun onFailure(message: String) {
        toast(message)
+    }
+
+    override fun back() {
+        super.onBackPressed()
     }
 }

@@ -10,4 +10,6 @@ interface TrendListener {
 
     fun onFailure(message:String)
 
+    fun back()
+
 }

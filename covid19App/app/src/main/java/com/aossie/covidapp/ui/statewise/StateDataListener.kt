@@ -8,5 +8,7 @@ interface StateDataListener {
 
     fun onFailure(message:String)
 
+    fun back()
+
 
 }

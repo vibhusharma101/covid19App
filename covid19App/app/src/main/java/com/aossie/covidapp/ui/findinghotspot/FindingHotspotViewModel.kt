@@ -118,4 +118,9 @@ class FindingHotspotViewModel(private val repo:MyRepository):ViewModel() {
 
     }
 
+    fun goBack(view:View)
+    {
+hotspotListener!!.back()
+    }
+
 }
